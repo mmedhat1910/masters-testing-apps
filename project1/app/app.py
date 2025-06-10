@@ -48,27 +48,22 @@ def create_schema_if_not_exists():
 def index():
     return render_template('index.html')
 
-# VULNERABILITY 2: Peering Manager-style SSTI RCE (CVE-2024-28114)
 @app.route('/render', methods=['POST'])
 def render():
     template_content = request.form.get('template', '')
-    # Directly rendering user-supplied string is dangerous!
-    # This is the core of the SSTI vulnerability.
+
     try:
         rendered_output = render_template_string(template_content)
         return rendered_output
     except Exception as e:
         return f"Template Error: {e}", 400
 
-# VULNERABILITY 3: SQL Injection
 @app.route('/search')
 def search():
     query = request.args.get('query', '')
     db = get_db()
     cursor = db.cursor()
 
-    # Unsafe query construction using f-string
-    # This is the SQL Injection vulnerability.
     sql_query = f"SELECT username FROM users WHERE username = '{query}'"
     
     try:
