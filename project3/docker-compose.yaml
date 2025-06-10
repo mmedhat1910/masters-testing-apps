@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    container_name: project4_cms
+    ports:
+      - "5004:3000"
+    volumes:
+      # We mount a volume to persist the SQLite database file
+      - app_data:/usr/src/app/db
+    networks:
+      - project4-net
+
+volumes:
+  app_data:
+
+networks:
+  project4-net:

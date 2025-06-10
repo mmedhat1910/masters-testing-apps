@@ -1,0 +1,29 @@
+{
+  "cloud_provider": "DigitalOcean",
+  "services_used": [
+    "Droplets (for compute)",
+    "Managed PostgreSQL",
+    "Spaces (S3-compatible object storage)",
+    "Cloud Firewall"
+  ],
+  "authentication_method": "SSH Keys for Droplet access, API tokens for service management",
+  "region": "fra1 (Frankfurt)",
+  "extra_info": "The application runs in a container on a Droplet. The firewall is configured to only allow traffic from a DigitalOcean Load Balancer. The database credentials are stored as environment variables in the container runtime.",
+  "open_ports": [
+    {
+      "port": 80,
+      "service": "HTTP",
+      "description": "Public web traffic, redirected to HTTPS by the load balancer."
+    },
+    {
+      "port": 443,
+      "service": "HTTPS",
+      "description": "Public SSL traffic, terminates at the load balancer."
+    },
+    {
+      "port": 22,
+      "service": "SSH",
+      "description": "Management access, restricted to specific IP addresses via the Cloud Firewall."
+    }
+  ]
+}
