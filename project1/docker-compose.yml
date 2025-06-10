@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  vulnerable_app:
+    build: .
+    container_name: project1_app
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./app_data:/app
+    networks:
+      - project1-net
+
+  # This container is just a staging ground for running exploit commands.
+  # It allows us to have a shell inside the same Docker network.
+  exploit_pod:
+    image: alpine:latest
+    container_name: project1_exploit_pod
+    command: ["sleep", "infinity"]
+    networks:
+      - project1-net
+
+networks:
+  project1-net:

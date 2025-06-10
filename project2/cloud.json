@@ -1,0 +1,29 @@
+{
+  "cloud_provider": "Google Cloud Platform (GCP)",
+  "services_used": [
+    "Compute Engine (for VM)",
+    "Cloud SQL for MySQL",
+    "Cloud Storage",
+    "Identity-Aware Proxy (IAP)"
+  ],
+  "authentication_method": "Service Accounts with OAuth 2.0 scopes",
+  "region": "europe-west2 (London)",
+  "extra_info": "The application VM is in a private VPC. Access is controlled via IAP, which handles user authentication before traffic reaches the app. The database is in a separate project and connects via a private IP.",
+  "open_ports": [
+    {
+      "port": 443,
+      "service": "HTTPS",
+      "description": "Public traffic, handled by Google's frontend and IAP."
+    },
+    {
+      "port": 3306,
+      "service": "MySQL",
+      "description": "Cloud SQL internal port, only accessible from the app's VPC."
+    },
+    {
+      "port": 22,
+      "service": "SSH",
+      "description": "Managed by OS Login, access restricted by IAM permissions."
+    }
+  ]
+}
