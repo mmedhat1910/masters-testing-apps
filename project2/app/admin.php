@@ -6,7 +6,6 @@ if (!isset($_SESSION['username'])) {
 }
 
 $message = '';
-// VULNERABILITY: CSRF. No anti-CSRF token check.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_user'])) {
     $newUser = $_POST['new_user'];
     $newPass = $_POST['new_pass'];
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_user'])) {
         <?php if($message) echo "<p class='message'>$message</p>"; ?>
 
         <div class="vuln-section">
-            <h3>Create New Admin User (CSRF Vulnerability)</h3>
+            <h3>Create New Admin User</h3>
             <form method="post">
                 New Username: <input type="text" name="new_user"><br>
                 New Password: <input type="text" name="new_pass"><br>
@@ -38,11 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_user'])) {
         </div>
 
         <div class="vuln-section">
-            <h3>Guestbook Comments (Stored XSS Trigger)</h3>
+            <h3>Guestbook Comments</h3>
             <?php
             $result = $conn->query("SELECT author, comment, created_at FROM comments ORDER BY created_at DESC");
             while ($row = $result->fetch_assoc()) {
-                // VULNERABILITY: Stored XSS. Comment is output without sanitization.
                 echo "<div class='comment'><strong>" . htmlspecialchars($row['author']) . "</strong> says:<p>" . $row['comment'] . "</p></div>";
             }
             ?>

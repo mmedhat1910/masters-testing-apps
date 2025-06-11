@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Project 2: CSRF, XSS & Command Injection</h1>
+        <h1>Project 2</h1>
         <?php if (isset($_SESSION['username'])): ?>
             <p>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>! You are logged in.</p>
             <a href="admin.php">Admin Panel</a> |

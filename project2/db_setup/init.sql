@@ -18,5 +18,4 @@ CREATE TABLE comments (
 );
 
 -- Add the default admin user
--- NOTE: In a real app, passwords should be hashed!
 INSERT INTO users (username, password, is_admin) VALUES ('admin', 'password', TRUE);
